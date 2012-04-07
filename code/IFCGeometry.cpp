@@ -332,7 +332,7 @@ void MergePolygonBoundaries(TempMesh& result, const TempMesh& inmesh, size_t mas
 			IFCImporter::LogDebug("skip small hole below threshold");
 		}
 		else {
-			normals[index] /= sqrt(sqlen);
+			normals[index] /= math::sqrt(sqlen);
 			vidx += *iit++;
 		}
 	}
@@ -359,7 +359,7 @@ next_loop:
 			for(size_t outer = 0; outer < *outer_polygon; ++outer) {
 				const IfcVector3& o = in[outer_polygon_start+outer], &onext = in[outer_polygon_start+(outer+1)%*outer_polygon], &od = (onext-o).Normalize();
 
-				if (fabs(vd * od) > 1.f-1e-6f && (onext-v).Normalize() * vd > 1.f-1e-6f && (onext-v)*(o-v) < 0) {
+				if (math::fabs(vd * od) > 1.f-1e-6f && (onext-v).Normalize() * vd > 1.f-1e-6f && (onext-v)*(o-v) < 0) {
 					IFCImporter::LogDebug("got an inner hole that lies partly on the outer polygonal boundary, merging them to a single contour");
 
 					// in between outer and outer+1 insert all vertices of this loop, then drop the original altogether.
@@ -474,17 +474,17 @@ void ProcessRevolvedAreaSolid(const IfcRevolvedAreaSolid& solid, TempMesh& resul
 	
 	bool has_area = solid.SweptArea->ProfileType == "AREA" && size>2;
 	const IfcFloat max_angle = solid.Angle*conv.angle_scale;
-	if(fabs(max_angle) < 1e-3) {
+	if(math::fabs(max_angle) < 1e-3) {
 		if(has_area) {
 			result = meshout;
 		}
 		return;
 	}
 
-	const unsigned int cnt_segments = std::max(2u,static_cast<unsigned int>(16 * fabs(max_angle)/AI_MATH_HALF_PI_F));
+	const unsigned int cnt_segments = std::max(2u,static_cast<unsigned int>(16 * math::fabs(max_angle)/AI_MATH_HALF_PI_F));
 	const IfcFloat delta = max_angle/cnt_segments;
 
-	has_area = has_area && fabs(max_angle) < AI_MATH_TWO_PI_F*0.99;
+	has_area = has_area && math::fabs(max_angle) < AI_MATH_TWO_PI_F*0.99;
 	
 	result.verts.reserve(size*((cnt_segments+1)*4+(has_area?2:0)));
 	result.vertcnt.reserve(size*cnt_segments+2);
@@ -558,7 +558,7 @@ IfcMatrix3 DerivePlaneCoordinateSpace(const TempMesh& curmesh) {
 	for (i = base; i < s-1; ++i) {
 		for (j = i+1; j < s; ++j) {
 			nor = -((out[i]-any_point)^(out[j]-any_point));
-			if(fabs(nor.Length()) > 1e-8f) {
+			if(math::fabs(nor.Length()) > 1e-8f) {
 				goto out;
 			}
 		}
@@ -660,7 +660,7 @@ bool TryAddOpenings_Poly2Tri(const std::vector<TempOpening>& openings,const std:
 		BOOST_FOREACH(const TempOpening& t,openings) {
 			const IfcVector3& outernor = nors[c++];
 			const IfcFloat dot = nor * outernor;
-			if (fabs(dot)<1.f-1e-6f) {
+			if (math::fabs(dot)<1.f-1e-6f) {
 				continue;
 			}
 
@@ -674,7 +674,7 @@ bool TryAddOpenings_Poly2Tri(const std::vector<TempOpening>& openings,const std:
 			BOOST_FOREACH(const IfcVector3& xx, t.profileMesh->verts) {
 				IfcVector3 vv = m *  xx, vv_extr = m * (xx + t.extrusionDir);
 				
-				const bool is_extruded_side = fabs(vv.z - coord) > fabs(vv_extr.z - coord);
+				const bool is_extruded_side = math::fabs(vv.z - coord) > math::fabs(vv_extr.z - coord);
 				if (first) {
 					first = false;
 					if (dot > 0.f) {
@@ -1048,20 +1048,20 @@ void InsertWindowContours(const std::vector< BoundingBox >& bbs,
 			const IfcVector2& v = contour[n];
 
 			bool hit = false;
-			if (fabs(v.x-bb.first.x)<epsilon) {
+			if (math::fabs(v.x-bb.first.x)<epsilon) {
 				edge.x = bb.first.x;
 				hit = true;
 			}
-			else if (fabs(v.x-bb.second.x)<epsilon) {
+			else if (math::fabs(v.x-bb.second.x)<epsilon) {
 				edge.x = bb.second.x;
 				hit = true;
 			}
 
-			if (fabs(v.y-bb.first.y)<epsilon) {
+			if (math::fabs(v.y-bb.first.y)<epsilon) {
 				edge.y = bb.first.y;
 				hit = true;
 			}
-			else if (fabs(v.y-bb.second.y)<epsilon) {
+			else if (math::fabs(v.y-bb.second.y)<epsilon) {
 				edge.y = bb.second.y;
 				hit = true;
 			}
@@ -1089,17 +1089,17 @@ void InsertWindowContours(const std::vector< BoundingBox >& bbs,
 
 						IfcVector2 corner = edge;
 
-						if (fabs(contour[last_hit].x-bb.first.x)<epsilon) {
+						if (math::fabs(contour[last_hit].x-bb.first.x)<epsilon) {
 							corner.x = bb.first.x;
 						}
-						else if (fabs(contour[last_hit].x-bb.second.x)<epsilon) {
+						else if (math::fabs(contour[last_hit].x-bb.second.x)<epsilon) {
 							corner.x = bb.second.x;
 						}
 
-						if (fabs(contour[last_hit].y-bb.first.y)<epsilon) {
+						if (math::fabs(contour[last_hit].y-bb.first.y)<epsilon) {
 							corner.y = bb.first.y;
 						}
-						else if (fabs(contour[last_hit].y-bb.second.y)<epsilon) {
+						else if (math::fabs(contour[last_hit].y-bb.second.y)<epsilon) {
 							corner.y = bb.second.y;
 						}
 
@@ -1218,7 +1218,7 @@ bool TryAddOpenings_Quadrulate(const std::vector<TempOpening>& openings,const st
 	BOOST_FOREACH(const TempOpening& t,openings) {
 		const IfcVector3& outernor = nors[c++];
 		const IfcFloat dot = nor * outernor;
-		if (fabs(dot)<1.f-1e-6f) {
+		if (math::fabs(dot)<1.f-1e-6f) {
 			continue;
 		}
 
@@ -1566,8 +1566,8 @@ Intersect IntersectSegmentPlane(const IfcVector3& p,const IfcVector3& n, const I
 	const IfcVector3 pdelta = e0 - p, seg = e1-e0;
 	const IfcFloat dotOne = n*seg, dotTwo = -(n*pdelta);
 
-	if (fabs(dotOne) < 1e-6) {
-		return fabs(dotTwo) < 1e-6f ? Intersect_LiesOnPlane : Intersect_No;
+	if (math::fabs(dotOne) < 1e-6) {
+		return math::fabs(dotTwo) < 1e-6f ? Intersect_LiesOnPlane : Intersect_No;
 	}
 
 	const IfcFloat t = dotTwo/dotOne;

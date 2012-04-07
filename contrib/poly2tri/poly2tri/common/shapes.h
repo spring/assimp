@@ -37,7 +37,7 @@
 #include <cstddef>
 #include <stdexcept>
 #include <assert.h>
-#include <cmath>
+#include "lib/streflop/streflop_cond.h"
 
 namespace p2t {
 
@@ -45,7 +45,7 @@ struct Edge;
 
 struct Point {
 
-  double x, y;
+  float x, y;
 
   /// Default constructor does nothing (for performance).
   Point()
@@ -58,7 +58,7 @@ struct Point {
   std::vector<Edge*> edge_list;
 
   /// Construct using coordinates.
-  Point(double x, double y) : x(x), y(y) {}
+  Point(float x, float y) : x(x), y(y) {}
 
   /// Set this point to all zeros.
   void set_zero()
@@ -97,16 +97,16 @@ struct Point {
   }
 
   /// Multiply this point by a scalar.
-  void operator *=(double a)
+  void operator *=(float a)
   {
     x *= a;
     y *= a;
   }
 
   /// Get the length of this point (the norm).
-  double Length() const
+  float Length() const
   {
-    return sqrt(x * x + y * y);
+    return math::sqrt(x * x + y * y);
   }
 
   /// Convert this point into a unit point. Returns the Length.

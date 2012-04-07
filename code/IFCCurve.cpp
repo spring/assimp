@@ -85,9 +85,9 @@ public:
 	size_t EstimateSampleCount(IfcFloat a, IfcFloat b) const {
 		ai_assert(InRange(a) && InRange(b));
 
-		a = fmod(a,static_cast<IfcFloat>( 360. ));
-		b = fmod(b,static_cast<IfcFloat>( 360. ));
-		return static_cast<size_t>( abs(ceil(( b-a)) / conv.settings.conicSamplingAngle) );
+		a = math::fmod(a,static_cast<IfcFloat>( 360. ));
+		b = math::fmod(b,static_cast<IfcFloat>( 360. ));
+		return static_cast<size_t>( abs(math::ceil(( b-a)) / conv.settings.conicSamplingAngle) );
 	}
 
 	// --------------------------------------------------
@@ -476,7 +476,7 @@ public:
 	IfcVector3 Eval(IfcFloat p) const {
 		ai_assert(InRange(p));
 		
-		const size_t b = static_cast<size_t>(floor(p));  
+		const size_t b = static_cast<size_t>(math::floor(p));  
 		if (b == points.size()-1) {
 			return points.back();
 		}
@@ -488,7 +488,7 @@ public:
 	// --------------------------------------------------
 	size_t EstimateSampleCount(IfcFloat a, IfcFloat b) const {
 		ai_assert(InRange(a) && InRange(b));
-		return static_cast<size_t>( ceil(b) - floor(a) );
+		return static_cast<size_t>( math::ceil(b) - math::floor(a) );
 	}
 
 	// --------------------------------------------------
@@ -547,7 +547,7 @@ bool Curve :: InRange(IfcFloat u) const
 	const ParamRange range = GetParametricRange();
 	if (IsClosed()) {
 		ai_assert(range.first != std::numeric_limits<IfcFloat>::infinity() && range.second != std::numeric_limits<IfcFloat>::infinity());
-		u = range.first + fmod(u-range.first,range.second-range.first);
+		u = range.first + math::fmod(u-range.first,range.second-range.first);
 	}
 	return u >= range.first && u <= range.second;
 }
@@ -594,12 +594,12 @@ IfcFloat RecursiveSearch(const Curve* cv, const IfcVector3& val, IfcFloat a, Ifc
 	}
 
 	ai_assert(min_diff[0] != inf && min_diff[1] != inf);
-	if ( fabs(a-min_point[0]) < threshold || recurse >= max_recurse) {
+	if ( math::fabs(a-min_point[0]) < threshold || recurse >= max_recurse) {
 		return min_point[0];
 	}
 
 	// fix for closed curves to take their wrap-over into account
-	if (cv->IsClosed() && fabs(min_point[0]-min_point[1]) > cv->GetParametricRangeDelta()*0.5  ) {
+	if (cv->IsClosed() && math::fabs(min_point[0]-min_point[1]) > cv->GetParametricRangeDelta()*0.5  ) {
 		const Curve::ParamRange& range = cv->GetParametricRange();
 		const IfcFloat wrapdiff = (cv->Eval(range.first)-val).SquareLength();
 

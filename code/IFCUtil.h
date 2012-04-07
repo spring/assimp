@@ -51,7 +51,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Assimp {
 namespace IFC {
 
-	typedef double IfcFloat;
+	typedef float IfcFloat;
 
 	// IfcFloat-precision math data types
 	typedef aiVector2t<IfcFloat> IfcVector2;
@@ -147,7 +147,7 @@ struct FuzzyVectorCompare {
 
 	FuzzyVectorCompare(IfcFloat epsilon) : epsilon(epsilon) {}
 	bool operator()(const IfcVector3& a, const IfcVector3& b) {
-		return fabs((a-b).SquareLength()) < epsilon;
+		return math::fabs((a-b).SquareLength()) < epsilon;
 	}
 
 	const IfcFloat epsilon;

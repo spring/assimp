@@ -53,7 +53,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
 #include <limits>
-#include <math.h>
+#include "lib/streflop/streflop_cond.h"
 
 // ----------------------------------------------------------------------------------------
 template <typename TReal>
@@ -425,7 +425,7 @@ inline aiMatrix4x4t<TReal>& aiMatrix4x4t<TReal>::RotationZ(TReal a, aiMatrix4x4t
 template <typename TReal>
 inline aiMatrix4x4t<TReal>& aiMatrix4x4t<TReal>::Rotation( TReal a, const aiVector3t<TReal>& axis, aiMatrix4x4t<TReal>& out)
 {
-  TReal c = cos( a), s = sin( a), t = 1 - c;
+  TReal c = math::cos( a), s = math::sin( a), t = 1 - c;
   TReal x = axis.x, y = axis.y, z = axis.z;
 
   // Many thanks to MathWorld and Wikipedia

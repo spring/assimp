@@ -15,7 +15,7 @@
 #ifndef __FAST_A_TO_F_H_INCLUDED__
 #define __FAST_A_TO_F_H_INCLUDED__
 
-#include <math.h>
+#include "lib/streflop/streflop_cond.h"
 
 namespace Assimp
 {
@@ -269,7 +269,7 @@ inline const char* fast_atoreal_move( const char* c, Real& out)
 		if (einv) {
 			exp = -exp;
 		}
-		f *= pow(static_cast<Real>(10.0f), exp);
+		f *= math::pow(static_cast<Real>(10.0f), exp);
 	}
 
 	if (inv) {
@@ -284,7 +284,7 @@ inline const char* fast_atoreal_move( const char* c, Real& out)
 inline float fast_atof(const char* c)
 {
 	float ret;
-	fast_atoreal_move<float>(c, ret);
+	fast_atoreal_move(c, ret);
 	return ret;
 }
 
@@ -306,26 +306,26 @@ inline float fast_atof( const char** inout)
 }
 
 
-inline double fast_atod(const char* c)
+inline float fast_atod(const char* c)
 {
-	double ret;
-	fast_atoreal_move<double>(c, ret);
+	float ret;
+	fast_atoreal_move<float>(c, ret);
 	return ret;
 }
 
 
-inline double fast_atod( const char* c, const char** cout)
+inline float fast_atod( const char* c, const char** cout)
 {
-	double ret;
-	*cout = fast_atoreal_move<double>(c, ret);
+	float ret;
+	*cout = fast_atoreal_move<float>(c, ret);
 
 	return ret;
 }
 
-inline double fast_atod( const char** inout)
+inline float fast_atod( const char** inout)
 {
-	double ret;
-	*inout = fast_atoreal_move<double>(*inout, ret);
+	float ret;
+	*inout = fast_atoreal_move<float>(*inout, ret);
 
 	return ret;
 }

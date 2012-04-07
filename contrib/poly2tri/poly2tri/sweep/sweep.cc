@@ -255,14 +255,14 @@ void Sweep::FillAdvancingFront(SweepContext& tcx, Node& n)
   }
 }
 
-double Sweep::BasinAngle(Node& node)
+float Sweep::BasinAngle(Node& node)
 {
-  double ax = node.point->x - node.next->next->point->x;
-  double ay = node.point->y - node.next->next->point->y;
-  return atan2(ay, ax);
+  float ax = node.point->x - node.next->next->point->x;
+  float ay = node.point->y - node.next->next->point->y;
+  return math::atan2(ay, ax);
 }
 
-double Sweep::HoleAngle(Node& node)
+float Sweep::HoleAngle(Node& node)
 {
   /* Complex plane
    * ab = cosA +i*sinA
@@ -272,11 +272,11 @@ double Sweep::HoleAngle(Node& node)
    * Where x = ax*bx + ay*by
    *       y = ax*by - ay*bx
    */
-  double ax = node.next->point->x - node.point->x;
-  double ay = node.next->point->y - node.point->y;
-  double bx = node.prev->point->x - node.point->x;
-  double by = node.prev->point->y - node.point->y;
-  return atan2(ax * by - ay * bx, ax * bx + ay * by);
+  float ax = node.next->point->x - node.point->x;
+  float ay = node.next->point->y - node.point->y;
+  float bx = node.prev->point->x - node.point->x;
+  float by = node.prev->point->y - node.point->y;
+  return math::atan2(ax * by - ay * bx, ax * bx + ay * by);
 }
 
 bool Sweep::Legalize(SweepContext& tcx, Triangle& t)

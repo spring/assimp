@@ -46,6 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define AI_VECTOR3D_INL_INC
 
 #ifdef __cplusplus
+#include "System/FastMath.h"
 #include "vector3.h"
 
 // ------------------------------------------------------------------------------------------------
@@ -90,7 +91,7 @@ AI_FORCE_INLINE TReal aiVector3t<TReal>::SquareLength() const {
 // ------------------------------------------------------------------------------------------------
 template <typename TReal>
 AI_FORCE_INLINE TReal aiVector3t<TReal>::Length() const {
-	return sqrt( SquareLength()); 
+	return math::sqrt( SquareLength());
 }
 // ------------------------------------------------------------------------------------------------
 template <typename TReal>
