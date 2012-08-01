@@ -39,7 +39,7 @@
 *******************************************************************************/
 
 #include "clipper.hpp"
-#include <cmath>
+#include "lib/streflop/streflop_cond.h"
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
