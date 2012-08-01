@@ -1133,7 +1133,7 @@ int GetProjectionMatrix (aiMatrix4x4& p_mOut)
 	const float fNearPlane = 0.1f;
 	const float fFOV = (float)(45.0 * 0.0174532925);
 
-	const float s = 1.0f / tanf(fFOV * 0.5f);
+	const float s = 1.0f / math::tanf(fFOV * 0.5f);
 	const float Q = fFarPlane / (fFarPlane - fNearPlane);
 
 	RECT sRect;

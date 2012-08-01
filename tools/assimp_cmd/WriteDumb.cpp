@@ -939,7 +939,7 @@ void WriteDump(const aiScene* scene, FILE* out, const char* src, const char* cmd
 			else if (!shortened){
 				fprintf(out,"\t\t<Data length=\"%i\"> \n",tex->mWidth*tex->mHeight*4);
 
-				// const unsigned int width = (unsigned int)log10((double)std::max(tex->mHeight,tex->mWidth))+1;
+				// const unsigned int width = (unsigned int)math::log10((double)std::max(tex->mHeight,tex->mWidth))+1;
 				for (unsigned int y = 0; y < tex->mHeight;++y) {
 					for (unsigned int x = 0; x < tex->mWidth;++x) {
 						aiTexel* tx = tex->pcData + y*tex->mWidth+x;
@@ -1096,7 +1096,7 @@ void WriteDump(const aiScene* scene, FILE* out, const char* src, const char* cmd
 		fprintf(out,"<MeshList num=\"%i\">\n",scene->mNumMeshes);
 		for (unsigned int i = 0; i < scene->mNumMeshes;++i) {
 			aiMesh* mesh = scene->mMeshes[i];
-			// const unsigned int width = (unsigned int)log10((double)mesh->mNumVertices)+1;
+			// const unsigned int width = (unsigned int)math::log10((double)mesh->mNumVertices)+1;
 
 			// mesh header
 			fprintf(out,"\t<Mesh types=\"%s %s %s %s\" material_index=\"%i\">\n",

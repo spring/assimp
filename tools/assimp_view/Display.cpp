@@ -748,7 +748,7 @@ int CDisplay::OnRender()
 			aiAnimation* mAnim = g_pcAsset->mAnimator->CurrentAnim();
 			if(  mAnim && mAnim->mDuration > 0.0) {
 				double tps = mAnim->mTicksPerSecond ? mAnim->mTicksPerSecond : 25.f;
-				time = fmod( time, mAnim->mDuration/tps);
+				time = math::fmod( time, mAnim->mDuration/tps);
 				SendDlgItemMessage(g_hDlg,IDC_SLIDERANIM,TBM_SETPOS,TRUE,LPARAM(10000 * (time/(mAnim->mDuration/tps))));			
 			}
 

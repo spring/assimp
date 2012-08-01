@@ -65,7 +65,7 @@ void AnimEvaluator::Evaluate( double pTime)
 	// map into anim's duration
 	double time = 0.0f;
 	if( mAnim->mDuration > 0.0)
-		time = fmod( pTime, mAnim->mDuration);
+		time = math::fmod( pTime, mAnim->mDuration);
 
 	if( mTransforms.size() != mAnim->mNumChannels)
 		mTransforms.resize( mAnim->mNumChannels);

@@ -2601,7 +2601,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				g_fFPS = dFPS;
 				char szOut[256];
 
-				sprintf(szOut,"%i",(int)floorf((float)dFPS+0.5f));
+				sprintf(szOut,"%i",(int)math::floorf((float)dFPS+0.5f));
 				SetDlgItemText(g_hDlg,IDC_EFPS,szOut);
 				}
 			}

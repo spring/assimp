@@ -38,7 +38,7 @@ inline bool floatingPointIsUnordered( double x )
 inline int floatingPointIsFinite( double x )
 {
 #if defined(CPPUNIT_HAVE_ISFINITE)
-   return isfinite( x );
+   return math::isfinite( x );
 #elif defined(CPPUNIT_HAVE_FINITE)
    return finite( x );
 #elif defined(CPPUNIT_HAVE__FINITE)

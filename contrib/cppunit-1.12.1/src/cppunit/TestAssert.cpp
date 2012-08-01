@@ -17,7 +17,7 @@ assertDoubleEquals( double expected,
 
   bool equal;
   if ( floatingPointIsFinite(expected)  &&  floatingPointIsFinite(actual) )
-      equal = fabs( expected - actual ) <= delta;
+      equal = math::fabs( expected - actual ) <= delta;
   else
   {
     // If expected or actual is not finite, it may be +inf, -inf or NaN (Not a Number).

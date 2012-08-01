@@ -274,23 +274,23 @@ void HandleMouseInputLocal( void )
 				int xPos = g_mousePos.x - sRect.right/2;
 				int yPos = g_mousePos.y - sRect.bottom/2;
 				float fXDist = (float)xPos;
-				float fYDist = (float)yPos / sqrtf((float)(yPos * yPos + xPos * xPos));
+				float fYDist = (float)yPos / math::sqrtf((float)(yPos * yPos + xPos * xPos));
 
 				bool bSign1;
 				if (fXDist < 0.0f)bSign1 = false;
 				else bSign1 = true;
-				float fAngle = asin(fYDist);
+				float fAngle = math::asin(fYDist);
 
 				xPos = g_LastmousePos.x - sRect.right/2;
 				yPos = g_LastmousePos.y - sRect.bottom/2;
 
 				fXDist = (float)xPos;
-				fYDist = (float)yPos / sqrtf((float)(yPos * yPos + xPos * xPos));
+				fYDist = (float)yPos / math::sqrtf((float)(yPos * yPos + xPos * xPos));
 
 				bool bSign2;
 				if (fXDist < 0.0f)bSign2 = false;
 				else bSign2 = true;
-				float fAngle2 = asin(fYDist);
+				float fAngle2 = math::asin(fYDist);
 				fAngle -= fAngle2;
 
 				if (bSign1 != bSign2)

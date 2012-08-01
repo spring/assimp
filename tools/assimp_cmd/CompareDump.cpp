@@ -307,7 +307,7 @@ template<> float comparer_context :: cmp<float>(const std::string& name)
 	float a,e,t;
 	read(a,e);
 
-	if((t=fabs(a-e)) > MY_FLT_EPSILON) {
+	if((t=math::fabs(a-e)) > MY_FLT_EPSILON) {
 		std::stringstream ss;
 		failure((ss<< "Expected " << e << ", but actual is " 
 			<< a << " (delta is " << t << ")", ss.str()),name);
@@ -322,7 +322,7 @@ template<> double comparer_context :: cmp<double>(const std::string& name)
 	double a,e,t;
 	read(a,e);
 
-	if((t=fabs(a-e)) > MY_DBL_EPSILON) {
+	if((t=math::fabs(a-e)) > MY_DBL_EPSILON) {
 		std::stringstream ss;
 		failure((ss<< "Expected " << e << ", but actual is " 
 			<< a << " (delta is " << t << ")", ss.str()),name);
